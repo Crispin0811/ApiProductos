@@ -13,7 +13,8 @@ if(process.env.NODE_ENV==='dev'){
     baseDatos= 'mongodb://localhost:27017/cafe'
 }else {
     
-    baseDatos='mongodb+srv://kevin:9Lgv6jJRyBSakVab@cluster0.jyvdq.mongodb.net/cafe'
+    baseDatos= process.env.MONGO_URI  //tienes que crear una varible de entorno con el link que te dan para conertar
+    // mongo atlas
 }
 
 process.env.URLBD = baseDatos;

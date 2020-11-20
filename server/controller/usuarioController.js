@@ -4,33 +4,36 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
 // USANDO EL MODELO USUARIO
-const Usuario = require('../models/usuario');
-const usuario = require("../models/usuario");
+let Usuario = require('../models/usuario');
+
+const {verificarToken,isAdminRol} = require('../middlewares/autenticacion');
 
 
 
-app.get('/usuarios', (req, res) => {
+
+
+app.get('/usuarios',verificarToken, (req, res) => {
     // lo que va en las comillas filtran los campos que queremos mandar
     // en este caso solo estamos mostrando 'nombre email'
-    Usuario.find({}, 'nombre email')
+    Usuario.find({}, 'nombre email img')
         .sort({ nombre: -1 })
-        .limit(5)
+        .limit(100)
         // para ejecutar la sentencia
         .exec((err, usuarioBD) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
                     err
-                })
+                });
             }
             res.json({
                 ok: true,
                 usuario: usuarioBD
             });
-        })
+        });
 });
 
-app.post('/usuarios', (req, res) => {
+app.post('/usuarios',[verificarToken,isAdminRol],(req, res) => {
 
     // usando el BODY-PARSER
     let body = req.body;
@@ -40,7 +43,6 @@ app.post('/usuarios', (req, res) => {
         nombre: body.nombre,
         email: body.email,
         password: bcrypt.hashSync(body.password, 10),
-        // img: body.img,
         role: body.role,
         estado: body.estado,
         google: body.google
@@ -62,7 +64,7 @@ app.post('/usuarios', (req, res) => {
     });
 
 });
-app.put('/usuarios/:id', (req, res) => {
+app.put('/usuarios/:id',[verificarToken, isAdminRol], (req, res) => {
     let id = req.params.id;
     let body = req.body;
 
@@ -88,7 +90,7 @@ app.put('/usuarios/:id', (req, res) => {
 
 
 
-app.delete('/usuarios/:id', (req, res) => {
+app.delete('/usuarios/:id',[verificarToken, isAdminRol], (req, res) => {
 
     let id = req.params.id;
 

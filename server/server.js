@@ -2,17 +2,22 @@ require('./config/config')
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
-
-// const bodyParser = require('body-parser');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 
 //usando application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// mediaware
-app.use(require('./controller/usuarioController'));
+//===========================
+//habilitando la carpeta pulic
+//===========================
+app.use(express.static(path.resolve(__dirname , '../public')));
+
+
+// configuracion de rutas
+app.use(require('./controller/rutasController'));
 
 // coneccion a la base de datos
 mongoose.connect(process.env.URLBD, {

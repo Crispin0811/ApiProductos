@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-signin-client_id"
+      content="871166051076-vjif4qs0t71lupim9pfqphopr4enc13k.apps.googleusercontent.com"
+    />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+      <title>Document</title>
+  </head>
+  <body>
+
+    <img src="http://localhost:3000/imagenes/usuarios/5f8fd7c9d279671cd0dead37-139.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7InJvbGUiOiJST0xfQURNSU4iLCJlc3RhZG8iOmZhbHNlLCJnb29nbGUiOmZhbHNlLCJfaWQiOiI1ZjhmZDc5MGQyNzk2NzFjZDBkZWFkMmYiLCJub21icmUiOiJ0ZXN0MiIsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIiwiX192IjowfSwiaWF0IjoxNjA1MTY0MzcxLCJleHAiOjE2MDc3NTYzNzF9.HcL8SfblRYbgiclJBaqi2UPnGzcmLMVsVcUc219acmo" alt="ssss">
+
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+    <form ref='uploadForm' 
+      id='uploadForm' 
+      action='http://localhost:3000/upload' 
+      method='POST' 
+      encType="multipart/form-data">
+        <input type="file" name="archivo" />
+        <input type='submit' value='dale' />
+    </form>  
+
+   
+    <script>
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log("Name: " + profile.getName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+        var id_token = googleUser.getAuthResponse().id_token;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/google");
+        xhr.setRequestHeader(
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        );
+        xhr.onload = function () {
+          console.log("Signed in as: " + xhr.responseText);
+        };
+        xhr.send("idtoken=" + id_token);
+      }
+    </script>
+  </body>
+</html>

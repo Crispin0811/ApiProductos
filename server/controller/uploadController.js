@@ -6,7 +6,6 @@ const path = require("path");
 
 let Usuario = require("../models/usuario");
 let Producto = require("../models/producto");
-const usuario = require("../models/usuario");
 
 // default options
 app.use(fileUpload());

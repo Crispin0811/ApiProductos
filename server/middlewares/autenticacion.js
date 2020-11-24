@@ -5,7 +5,6 @@
 const jwt = require('jsonwebtoken');
 
 let verificarToken = (req, res, next) => {
-    //cuando utilizar heders en el URL usas GET
     let token = req.get('token');
 
     jwt.verify(token,process.env.SEED,(err, decoded)=>{
@@ -42,7 +41,6 @@ const isAdminRol = (req, res, next)=>{
 }
 
 const verificarTokenImg = (req, res, next)=>{
-    //cuando viene por parametro
     let token = req.query.token;
 
     jwt.verify(token,process.env.SEED,(err, decoded)=>{

@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 
-//usando application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -29,10 +28,8 @@ mongoose.connect(process.env.URLBD, {
     if (e) throw e;
     console.log("todo es ok");
 });
-// coneccion a la base de datos
 
 
-//process.env.PORT viene del archuvi config
 app.listen(process.env.PORT, () => {
     console.log(process.env.PORT);
 });

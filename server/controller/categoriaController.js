@@ -8,7 +8,6 @@ let { verificarToken, isAdminRol } = require("../middlewares/autenticacion");
 app.get("/categoria", verificarToken, (req, res) => {
   
   Categoria.find()
-    //para ver los usuaros que se relacionan (si quieres restringir con campos los pasas con 2do arg)
     .populate("usuario", "nombre email")
     .sort({ descripcion: -1 })
     .exec((err, categoriaBD) => {

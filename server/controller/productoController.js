@@ -43,9 +43,7 @@ app.get("/producto/:id", verificarToken, (req, res) => {
     .populate("categoria");
 });
 
-//===========================
-//busqueda mas eficiente usando REGEXP
-//=========================== 
+
 app.get("/producto/buscar/:termino", verificarToken, (req, res) => {
 
   let termino = req.params.termino;

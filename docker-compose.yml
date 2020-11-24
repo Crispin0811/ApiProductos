@@ -1,0 +1,19 @@
+version: "3"
+
+services: 
+        web:
+            container_name: productoweb
+            restart: always
+            build: .
+            ports: 
+              - "5000:3000"
+            links:
+              - "mongo"
+            volumes:
+              - .:/usr/scr/app
+        mongo:
+            container_name: mongobd
+            image: mongo
+            ports: 
+                - "27018:27017"
+            
